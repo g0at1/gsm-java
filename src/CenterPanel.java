@@ -5,31 +5,47 @@ public
     class CenterPanel
     extends JPanel {
 
-    private final JPanel panel;
+    private JPanel panel;
 
     public CenterPanel() {
-        panel = createCenterPanel();
-    }
-
-    public JPanel getPanel() {
-        return panel;
-    }
-
-    private JPanel createCenterPanel() {
-        JPanel panel = new JPanel();
+        panel = new JPanel();
         panel.setLayout(new BorderLayout());
 
         JPanel btsPanel = createBTSPanel();
+        btsPanel.setLayout(new BoxLayout(btsPanel, BoxLayout.Y_AXIS));
+
         JPanel bscPanel = createBSCPanel();
+        bscPanel.setLayout(new BoxLayout(bscPanel, BoxLayout.Y_AXIS));
+
         JPanel buttonsPanel = createButtonsPanel();
 
         panel.add(btsPanel, BorderLayout.WEST);
         panel.add(bscPanel, BorderLayout.EAST);
         panel.add(buttonsPanel, BorderLayout.SOUTH);
-
-        return panel;
     }
 
+//
+//    public CenterPanel() {
+//        panel = createCenterPanel();
+//    }
+//
+//
+//
+//    private JPanel createCenterPanel() {
+//        JPanel panel = new JPanel();
+//        panel.setLayout(new BorderLayout());
+//
+//        JPanel btsPanel = createBTSPanel();
+//        JPanel bscPanel = createBSCPanel();
+//        JPanel buttonsPanel = createButtonsPanel();
+//
+//        panel.add(btsPanel, BorderLayout.WEST);
+//        panel.add(bscPanel, BorderLayout.EAST);
+//        panel.add(buttonsPanel, BorderLayout.SOUTH);
+//
+//        return panel;
+//    }
+//
     private JPanel createBTSPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -43,7 +59,6 @@ public
         panel.setBorder(BorderFactory.createTitledBorder("BSC"));
         return panel;
     }
-
     private JPanel createButtonsPanel() {
         JPanel panel = new JPanel();
 
@@ -68,7 +83,7 @@ public
 
         JPanel stationPanel = new JPanel();
         stationPanel.setLayout(new GridLayout(3, 1));
-        stationPanel.add(new JLabel("BTS Number"));
+        stationPanel.add(new JLabel("BTS Number: " + btsPanel.getComponentCount()));
         stationPanel.add(new JLabel("Processed SMS: 0"));
         stationPanel.add(new JLabel("Waiting SMS: 0"));
 
@@ -81,7 +96,7 @@ public
 
         JPanel stationPanel = new JPanel();
         stationPanel.setLayout(new GridLayout(3, 1));
-        stationPanel.add(new JLabel("BSC Number"));
+        stationPanel.add(new JLabel("BSC Number: " + bscPanel.getComponentCount()));
         stationPanel.add(new JLabel("Processed SMS: 0"));
         stationPanel.add(new JLabel("Waiting SMS: 0"));
 
@@ -92,10 +107,14 @@ public
     private void removeBSC() {
         JPanel bscPanel = (JPanel) panel.getComponent(1);
         int componentCount = bscPanel.getComponentCount();
-        if (componentCount > 0) {
+        if (componentCount > 1) {
             bscPanel.remove(componentCount - 1);
             bscPanel.revalidate();
             bscPanel.repaint();
         }
+    }
+
+    public JPanel getPanel() {
+        return panel;
     }
 }
